@@ -1,3 +1,20 @@
+Main python file for both of us (BAJU.py)
+
+Always pull before working
+
+Always push after saving and finishing
+
+For Pushing:
+1. Save file
+2. Add file (git add filename.py)
+3. Commit (git commit -m "message")
+4. Push (git push origin main)
+
+
+
+
+
+
 # Final_Project
 Final Project of Julian and Bader
 
