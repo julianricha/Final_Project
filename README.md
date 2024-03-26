@@ -10,6 +10,11 @@ For Pushing:
 3. Commit (git commit -m "message")
 4. Push (git push origin main)
 
+For Pulling
+1. Open gitbash in Final Project folder
+2. Git pull origin main
+3. Most recent file commit will appear in folder
+4. Work on that python file and push after done
 
 
 
