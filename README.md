@@ -3,12 +3,15 @@ Final Project of Julian and Bader
 
 Project Topic: Food Ordering App 
 This project aims to develop a comprehensive Python application that leverages a food ordering system that allows users to order food from the menu of the restaurant of their choice, be able to track their order such as estimated delivery time with traffic taken into account based on location, breakdown of order cost, and be able to apply to an optional membership offered by the app for discounts. The application will utilize object oriented programming and inheritance for both restaurants and user functionality, and will be using a graphical user interface to provide a friendly and dynamic interaction with the user. The primary objective is to build a user-friendly and efficient app for users of different locations and appetites to order food online through delivery, while having the option of using a monthly membership to have users be excluded from delivery fees, services fees, tax fees, and be able to apply discounts. 
+
 Git Repository: 
 https://github.com/julianricha/Final_Project 
+
 Project Objectives: 
 - To develop a Python application that allows users to order food through delivery, have a breakdown of the order cost, estimated delivery time, and apply for an optional membership for discounts and price cuts
 - Implement object oriented programming and inheritance for restaurants and user functionalities
 - Create a graphical user interface for the ordering process and display full order with info to the user
+
 Deliverables: 
 - A fully functional Python application of a food ordering system 
 - A report detailing the program's efficiency and behavior with orders from different restaurants. 
