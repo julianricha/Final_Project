@@ -70,6 +70,19 @@ class Chipotle(Restaurant): #To edit later customisable bowl
 
         
 #def calculate_delivery_cost_and_time()
+def calculate_delivery_cost_and_time(area):
+    
+    trafic_dict = {"no trafic":1, "low trafic":1.1, "high trafic":1.3}
+    
+    trafic_coefficient = 
+    trafic_type = 
+    
+    if area == "downtown":
+        return 5, "30 minutes"
+    elif area == "suburbs":
+        return 10, "60 minutes"
+    else:
+        return 15, "90 minutes"
         
 
 def main():
@@ -83,6 +96,8 @@ def main():
     chosen_restaurant = restaurants[choice]
 
     chosen_restaurant.display_menu() 
+    
+    print("new changes")
     
     
 #ask user for items
