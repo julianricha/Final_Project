@@ -79,10 +79,10 @@ def main():
         print(f"{index}. {restaurant.name}")
 
     choice = int(input("Choose a restaurant by number: ")) - 1
-    print()
+    print("chngea by JuliN")
     chosen_restaurant = restaurants[choice]
 
-    chosen_restaurant.display_menu() 
+    chosen_restaurant.display_menu()
 
 
 #ask user for items
