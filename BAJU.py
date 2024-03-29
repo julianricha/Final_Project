@@ -1,7 +1,7 @@
 
 
 class Restaurant:
-    def __init__(self, name, menu, tax_fee):
+    def __init__(self, name, menu, tax_fee, delivery_fee, service_fee):
         self.name = name
         self.menu = menu
         self.tax_fee = tax_fee
@@ -79,7 +79,7 @@ def main():
         print(f"{index}. {restaurant.name}")
 
     choice = int(input("Choose a restaurant by number: ")) - 1
-    print("chngea by JuliN")
+    print("Changes made by bader")
     chosen_restaurant = restaurants[choice]
 
     chosen_restaurant.display_menu()
