@@ -28,14 +28,6 @@ class CheesecakeFactory(Restaurant):
     # User simply chooses from menu, calculates price and calories for each
 
 class McDonalds(Restaurant):
-    def __init__(self, size, sandwich, drink):
-        self.size = size
-        self.sandwich = sandwich
-        self.drink = drink
-        
-    meal_price = {"Happy Meal": 10, "Regular Meal": 14, "Large Meal": 18}
-    meal_calories = {"Happy Meal": 500, "Medium Meal": 790, "Large Meal": 1100}
-    meal_sandwich_calories = {"Big Mac": 450, "Quarter Pounder": 500, "McChicken": 350, "Cheese Burger": 300}
     def __init__(self):
         # Compound menu - choose either sandwich or sandwich + meal
         meal_menu = {"Happy Meal": (3, 500), "Regular Meal": (5, 790), "Large Meal": (8, 1100)}
