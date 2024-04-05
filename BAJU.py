@@ -1,4 +1,6 @@
 import random as rd
+from datetime import datetime
+
 
 class Restaurant:
     def __init__(self):
@@ -70,9 +72,15 @@ traffic_dict = {"no traffic": 1, "low traffic": 1.1, "high traffic": 1.3}
 traffic_type, traffic_coefficient = rd.choice(list(traffic_dict.items()))
 
 def calculate_delivery_cost(area):
+    now = datetime.now()
+    current_hour = now.hour
+    if (12 <= current_hour < 14) or (18 <= current_hour < 21):
+        rush_hour_fee = 2
+    else:
+        rush_hour_fee = 0
     area_delivery_costs = {1: 2, 2: 2.5, 3: 3, 4: 3.5, 5: 4}
     if area in area_delivery_costs:
-        return round(area_delivery_costs[area] * traffic_coefficient, 2)
+        return round(area_delivery_costs[area] * traffic_coefficient + rush_hour_fee, 2)
     else:
         print("Invalid area number.")
         return 0
