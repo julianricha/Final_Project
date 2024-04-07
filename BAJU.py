@@ -9,8 +9,8 @@ class Restaurant:
         for i, item in enumerate(cart):
             print(f"{i + 1}. {item}")
             
-        print(f"Food total: ${total_price:.2f}")
         print(f"Total calories: {total_calories} calories")
+        print(f"Food total: ${total_price:.2f}")
 
 class CheesecakeFactory(Restaurant):
     def __init__(self):
@@ -30,8 +30,9 @@ class CheesecakeFactory(Restaurant):
         cart = []
         
         while True:
+            print()
             self.print_menu()
-            
+            print()
             user_selection = int(input("Select item # to add to cart, or enter 0 if you are ready to checkout: "))
             
             if user_selection == 0:
@@ -48,10 +49,10 @@ class CheesecakeFactory(Restaurant):
             else:
                 print("Invalid selection, press 0 if you are ready to checkout.")
                 
+        print()
         self.print_order_summary(cart, total_price, total_calories)
             
-        # May need to take this return value so we can add it to the delivery fee later.
-        #return total_price
+        return total_price
     
     def print_menu(self):
         print("Cheesecake Factory Menu:\n")
@@ -81,9 +82,11 @@ class McDonalds(Restaurant):
         cart = []
         
         while True:
+            print()
             self.print_sandwich_menu()
-           
+            print()
             user_sandwich_selection = int(input("Select Sandwich # to add to cart, or enter 0 if you are ready to checkout: "))
+            
             if user_sandwich_selection == 0:
                 break
             elif user_sandwich_selection >= 1 and user_sandwich_selection <= 4:
@@ -95,7 +98,9 @@ class McDonalds(Restaurant):
                 total_calories += sandwich_calories
                 cart.append(sandwich_selection)
                 
+                print()
                 self.print_meal_menu()
+                print()
                 user_meal_selection = int(input("Would you like to make it a meal?: "))
                 
                 if user_meal_selection == 0:
@@ -113,9 +118,10 @@ class McDonalds(Restaurant):
             else:
                 print("Invalid sandwich selection, try again.")
                 
+        print()
         self.print_order_summary(cart, total_price, total_calories)
         
-        #return total_price
+        return total_price
         
     def print_sandwich_menu(self):
         print("Mcdonald's Sandwich Menu:\n")
@@ -146,9 +152,72 @@ class TatteBakery(Restaurant):
         menu = {"Almond Croissant": (3,400, ("butter", "egg")),
                     "Short Ribs Sandwich": (10,560, ("meat", "onions")),
                      "Chicken Pita": (8,450, ("toasted", "pickles")),
-                     "Coffee": (2, 100, ("iced", "almond milk")),
+                     "Coffee": (2, 100, ("caramel", "whipped cream")),
                      }
         super().__init__(menu)
+        
+    def order(self):
+        total_price = 0
+        total_calories = 0
+        cart = []
+        
+        while True:
+            print()
+            self.print_menu()
+            print()
+            user_selection = int(input("Select item # to add to cart, or enter 0 if you are ready to checkout: "))
+            
+            if user_selection == 0:
+                break
+            elif user_selection >= 1 and user_selection <= 4:
+                menu_items = list(self.menu.keys())
+                menu_selection = menu_items[user_selection - 1]
+                
+                item_price, item_calories, options = self.menu[menu_selection]
+                
+                total_price += item_price
+                total_calories += item_calories
+                cart.append(menu_selection)
+                
+                while True:
+                    print()
+                    self.print_options(menu_selection)
+                    print()
+                    option_selection = int(input("Select option # to add to your item, or enter 0 for no options: "))
+                    
+                    if option_selection == 0:
+                        break
+                    elif option_selection >= 1 and option_selection <= 2:
+                        option = options[option_selection - 1]
+                        total_price += 1
+                        total_calories += 100
+                        cart[-1] = cart[-1] + "+" + option
+            else:
+                print("Invalid selection, press 0 if you are ready to checkout.")
+         
+        print()
+        self.print_order_summary(cart, total_price, total_calories)
+        
+        return total_price
+        
+    def print_menu(self):
+        print("Tatte Bakery Menu:\n")
+        
+        i = 1
+        
+        for item, details in self.menu.items():
+            price, calories, options = details
+            print(f"{i}. {item} | Price: ${price:.2f}, Calories: {calories} cal | Additional Options: {options}")
+            i += 1
+              
+    def print_options(self, item):
+        print(f"Options for {item}:")
+        
+        i = 1
+        print(f"0. No options | Price: ${0:.2f}, Calories: 0 cal")
+        for option in self.menu[item][2]:
+            print(f"{i}. {option} | Price: $1.00, Calories: 100 cal")
+            i += 1
         
 class DominosPizza(Restaurant): 
     def __init__(self):
@@ -188,58 +257,44 @@ class Chipotle(Restaurant): #To edit later customisable bowl
         super().__init__(menu)
     
     # User builds either bowl or burrito from scratch by choosing an option from each category while knowing both price and calorie count
-  
-
-traffic_dict = {"no traffic": 1, "low traffic": 1.1, "high traffic": 1.3}
-traffic_type, traffic_level = rd.choice(list(traffic_dict.items()))
     
-def calculate_delivery_cost(area):
+    
+def print_restaurant_names():
+    print("Restaurants:\n")
+    restaurants = ["Cheesecake Factory", "McDonald's", "Tatte Bakery", "Dominos Pizza", "Chipotle"]
+    
+    for i, r in enumerate(restaurants, start=1):
+        print(f"{i}. {r}")
+        
+        
+def calculate_delivery_cost(area, traffic_level):
     area_delivery_costs = {1: 2, 2: 2.5, 3: 2.5, 4: 2.5, 5: 2.5}
     if area in area_delivery_costs:
         delivery_cost = round(area_delivery_costs[area]*traffic_level, 2)
-        print("")
-        print(f"Delivery cost: ${delivery_cost:.2f}")
+        
+        return delivery_cost
     else:
         print("Invalid area number.")
-         
+        
                 
-def calculate_delivery_time(area):
+def calculate_delivery_time(area, traffic_level):
     area_delivery_times = {1: 10, 2: 15, 3: 25, 4: 30, 5: 20}
     if area in area_delivery_times:
         delivery_time = int(area_delivery_times[area] * traffic_level)
-        print("")
-        print(f"Estimated delivery time: {delivery_time} min due to {traffic_type}.")
-
+        
+        return delivery_time
     else:
         print("Invalid area number.")
     
           
 def main():
-    restaurants = [CheesecakeFactory(), McDonalds(), TatteBakery(), DominosPizza(), Subway(), Chipotle()]
-    print("Restaurants:")
-    for index, restaurant in enumerate(restaurants, start=1):
-        print(f"{index}. {restaurant.name}")
-
+    restaurants = [CheesecakeFactory(), McDonalds(), TatteBakery(), DominosPizza(), Chipotle()]
+    
+    print_restaurant_names()
+    print()
     choice = int(input("Choose a restaurant by number: ")) - 1
     print()
     chosen_restaurant = restaurants[choice]
-
-    print("____________________________________________________________________")
-    print("")
-    chosen_restaurant.display_menu() 
-    print("____________________________________________________________________")
-    
-    
-    def order_cart():
-    # for next iteration
-        pass
-    def calculate_total_cost():
-    # for next iteration
-        pass
-    
-    
-   
-    
     
     print("")
     print("1. Fenway")
@@ -248,33 +303,18 @@ def main():
     print("4. Seaport")
     print("5. Backbay")
     print("")
-    area_number = int(input("Please enter your area number:")) 
+    area_number = int(input("Please enter your area number: ")) 
     print("____________________________________________________________________")
     
-
+    traffic_dict = {"no traffic": 1, "low traffic": 1.1, "high traffic": 1.3}
+    traffic_type, traffic_level = rd.choice(list(traffic_dict.items()))
     
-    
-    print("")
-    print(f"Invoice:")
-    
-    print("")
-    print("ITEM LIST HERE") 
-    print("")
-    
-    calculate_delivery_cost(area_number)
-    
-    calculate_delivery_time(area_number)
+    delivery_cost = calculate_delivery_cost(area_number, traffic_level)
+    delivery_time = calculate_delivery_time(area_number, traffic_level)
+    food_cost = chosen_restaurant.order()
+ 
+    print(f"Delivery cost: ${delivery_cost:.2f}")
+    print(f"Grand total: ${delivery_cost + food_cost:.2f}")
+    print(f"Estimated delivery time: {delivery_time} min due to {traffic_type}.")
 
-    
-    
-#main()
-
-def test_main():
-    mc = McDonalds()
-    mc.order()
-
-test_main()
-
-
-
-
+main()
