@@ -3,15 +3,14 @@ import random as rd
 class Restaurant:
     def __init__(self, menu):
         self.menu = menu
-
-    def display_menu(self):
-        print(f"Menu for {self.name}:")
-        for item, price in self.menu.items():
-            print(f"(${price}) {item}")
+        
+    def print_order_summary(self, cart, total_price, total_calories):
+        print("Order summary: ")
+        for i, item in enumerate(cart):
+            print(f"{i + 1}. {item}")
             
-    def order_item(self, choice):
-        # To-do
-        pass
+        print(f"Food total: ${total_price:.2f}")
+        print(f"Total calories: {total_calories} calories")
 
 class CheesecakeFactory(Restaurant):
     def __init__(self):
@@ -24,6 +23,45 @@ class CheesecakeFactory(Restaurant):
                 "Fillet Mignon Steak": (20,300)}
         
         super().__init__(menu)
+        
+    def order(self):
+        total_price = 0
+        total_calories = 0
+        cart = []
+        
+        while True:
+            self.print_menu()
+            
+            user_selection = int(input("Select item # to add to cart, or enter 0 if you are ready to checkout: "))
+            
+            if user_selection == 0:
+                break
+            elif user_selection >= 1 and user_selection <= 6:
+                menu_items = list(self.menu.keys())
+                menu_selection = menu_items[user_selection - 1]
+                
+                item_price, item_calories = self.menu[menu_selection]
+                
+                total_price += item_price
+                total_calories += item_calories
+                cart.append(menu_selection)
+            else:
+                print("Invalid selection, press 0 if you are ready to checkout.")
+                
+        self.print_order_summary(cart, total_price, total_calories)
+            
+        # May need to take this return value so we can add it to the delivery fee later.
+        #return total_price
+    
+    def print_menu(self):
+        print("Cheesecake Factory Menu:\n")
+        
+        i = 1
+        
+        for item, details in self.menu.items():
+            price, calories = details
+            print(f"{i}. {item} | Price: ${price:.2f}, Calories: {calories} cal")
+            i += 1
 
     # User simply chooses from menu, calculates price and calories for each
 
@@ -36,11 +74,71 @@ class McDonalds(Restaurant):
         menu = {"meals": meal_menu, "sandwiches": sandwich_menu}
         
         super().__init__(menu)
-       
-    # User chooses meal size between happy meal, regular, and large, each with a price to start
-    # User chooses sandwich type with specific price and calorie count
-    # Calories for all drink are same, and already included in meal_calories along with fry calories
+        
+    def order(self):
+        total_price = 0
+        total_calories = 0
+        cart = []
+        
+        while True:
+            self.print_sandwich_menu()
+           
+            user_sandwich_selection = int(input("Select Sandwich # to add to cart, or enter 0 if you are ready to checkout: "))
+            if user_sandwich_selection == 0:
+                break
+            elif user_sandwich_selection >= 1 and user_sandwich_selection <= 4:
+                sandwich_items = list(self.menu["sandwiches"])
+                sandwich_selection = sandwich_items[user_sandwich_selection - 1]
+                sandwich_price, sandwich_calories = self.menu["sandwiches"][sandwich_selection]
+                
+                total_price += sandwich_price
+                total_calories += sandwich_calories
+                cart.append(sandwich_selection)
+                
+                self.print_meal_menu()
+                user_meal_selection = int(input("Would you like to make it a meal?: "))
+                
+                if user_meal_selection == 0:
+                    continue
+                if user_meal_selection >= 1 and user_meal_selection <= 3:
+                    meal_items = list(self.menu["meals"])
+                    meal_selection = meal_items[user_meal_selection - 1]
+                    meal_price, meal_calories = self.menu["meals"][meal_selection]
+                    
+                    total_price += meal_price
+                    total_calories += meal_calories
+                    cart[-1] = cart[-1] + " " + meal_selection
+                else:
+                    print("Invalid meal selection, adding sandwich only to cart.")
+            else:
+                print("Invalid sandwich selection, try again.")
+                
+        self.print_order_summary(cart, total_price, total_calories)
+        
+        #return total_price
+        
+    def print_sandwich_menu(self):
+        print("Mcdonald's Sandwich Menu:\n")
+        
+        i = 1
+        
+        for item, details in self.menu["sandwiches"].items():
+            price, calories = details
+            print(f"{i}. {item} | Price: ${price:.2f}, Calories: {calories} cal")
+            i+=1
     
+    def print_meal_menu(self):
+        print("Mcdonald's Meal Menu:\n")
+        
+        i = 1
+        
+        print(f"0. Sandwich only | Price: ${0:.2f}, Calories: 0 cal")
+        for item, details in self.menu["meals"].items():
+            price, calories = details
+            print(f"{i}. {item} | Price: ${price:.2f}, Calories: {calories} cal")
+            i+=1
+    
+       
 class TatteBakery(Restaurant):
     def __init__(self):
         # Add $1 and 100 calories for each additional option on each item
@@ -132,10 +230,13 @@ def main():
     print("____________________________________________________________________")
     
     
-    def order_cart()
+    def order_cart():
     # for next iteration
+        pass
     def calculate_total_cost():
     # for next iteration
+        pass
+    
     
    
     
@@ -166,8 +267,13 @@ def main():
 
     
     
-main()
+#main()
 
+def test_main():
+    mc = McDonalds()
+    mc.order()
+
+test_main()
 
 
 
