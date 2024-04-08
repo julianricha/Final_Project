@@ -101,7 +101,7 @@ class McDonalds(Restaurant):
                 print()
                 self.print_meal_menu()
                 print()
-                user_meal_selection = int(input("Would you like to make it a meal?: "))
+                user_meal_selection = int(input("Select your meal type, or type 0 for sandwich only: "))
                 
                 if user_meal_selection == 0:
                     continue
@@ -233,18 +233,6 @@ class DominosPizza(Restaurant):
     # User chooses type of pizza from list of above that adds a specific amount extra to the price based on choice along with specific calorie count 
     # Calculates total cost and total calories based on choice of size and pizza
 
-class Subway(Restaurant):#To edit later customisable subs size
-    def __init__(self):
-        bread = {"6 inch": (5,200), "12 inch": (10,400)}
-        protein = {"Turkey": (5,300),"Chicken": (4,200),"Tuna": (7,320), "Steak": (8,230), "Meatball": (6,300)}
-    
-        menu = {"Bread Size": bread, "Protein": protein}
-        super().__init__(menu)
-    
-    # User chooses between 6 and 12 inch bread each with price and calorie count, PRICE ONLY ACCOUNTS FOR BREAD SIZE AND PROTEIN, 
-    # User adds protein with specific calorie count, doubles for 12 inch
-    # User adds toppings only with price count
-
 class Chipotle(Restaurant): #To edit later customisable bowl
     def __init__(self):
         
@@ -266,6 +254,12 @@ def print_restaurant_names():
     for i, r in enumerate(restaurants, start=1):
         print(f"{i}. {r}")
         
+def print_areas():
+    print("1. Fenway")
+    print("2. Newbury")
+    print("3. Downtown")
+    print("4. Seaport")
+    print("5. Backbay")
         
 def calculate_delivery_cost(area, traffic_level):
     area_delivery_costs = {1: 2, 2: 2.5, 3: 2.5, 4: 2.5, 5: 2.5}
@@ -292,19 +286,31 @@ def main():
     
     print_restaurant_names()
     print()
-    choice = int(input("Choose a restaurant by number: ")) - 1
-    print()
-    chosen_restaurant = restaurants[choice]
+    choice = int(input("Choose a restaurant by number: "))
     
-    print("")
-    print("1. Fenway")
-    print("2. Newbury")
-    print("3. Downtown")
-    print("4. Seaport")
-    print("5. Backbay")
-    print("")
+    while choice > 5 or choice < 1:
+        print_restaurant_names()
+        print("Invalid selection, enter a number 1-5.\n")
+        choice = int(input("Choose a restaurant by number: "))
+        print()
+
+    chosen_restaurant = restaurants[choice - 1]
+    
+    print_areas()
+    print()
+    print()
     area_number = int(input("Please enter your area number: ")) 
     print("____________________________________________________________________")
+    
+   
+    while area_number > 5 or area_number < 1:
+        print_areas()
+        print()
+        print()
+        area_number = int(input("Please enter your area number: "))
+        print("____________________________________________________________________")
+     
+   
     
     traffic_dict = {"no traffic": 1, "low traffic": 1.1, "high traffic": 1.3}
     traffic_type, traffic_level = rd.choice(list(traffic_dict.items()))
