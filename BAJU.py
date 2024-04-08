@@ -227,7 +227,75 @@ class DominosPizza(Restaurant):
         
         menu = {"size": size_menu, "choice": choice_menu}
         
+      
         super().__init__(menu)
+        
+        
+    def order(self):
+        total_price = 0
+        total_calories = 0
+        cart = []
+        
+        while True:
+            print()
+            self.print_size_menu()
+            print()
+            user_selection = int(input("Select your pizza size, or enter 0 if you are ready to checkout: "))
+            
+            if user_selection == 0:
+                break
+            elif user_selection <= 3 and user_selection >= 1:
+                size_options = list(self.menu["size"].keys())
+                size_selection = size_options[user_selection - 1]
+                size_price, size_calories = self.menu["size"][size_selection]
+                
+                print()
+                self.print_pizza_menu()
+                print()
+                user_selection = int(input("Select pizza choice: "))
+                
+                while user_selection > 5 or user_selection < 1:
+                    print("Invalid selection, enter a number 1-5.\n")
+                    self.print_pizza_menu()
+                    print()
+                    pizza_selection = int(input("Select pizza choice: "))
+                    print()
+                
+                pizza_options = list(self.menu["choice"].keys())
+                pizza_selection = pizza_options[user_selection - 1]
+                pizza_price, pizza_calories = self.menu["choice"][pizza_selection]
+                
+                total_price += (size_price + pizza_price)
+                total_calories += (size_calories + pizza_calories)
+                pizza_order = f"{size_selection} {pizza_selection} Pizza"
+                cart.append(pizza_order)
+            else:
+                print("Invalid selection, press 0 if you are ready to checkout.")
+    
+        print()
+        self.print_order_summary(cart, total_price, total_calories)
+        
+        return total_price
+    
+    def print_size_menu(self):
+       print("Dominos Sizes:\n")
+       
+       i = 1
+       
+       for size, details in self.menu["size"].items():
+           price, calories = details
+           print(f"{i}. {size} | Price: ${price:.2f}, Calories: {calories} cal")
+           i+=1
+   
+    def print_pizza_menu(self):
+       print("Dominos Pizza Menu:\n")
+       
+       i = 1
+       
+       for pizza, details in self.menu["choice"].items():
+           price, calories = details
+           print(f"{i}. {pizza} | Price: ${price:.2f}, Calories: {calories} cal")
+           i+=1
             
     # User chooses size with each size having specific number of calories and price
     # User chooses type of pizza from list of above that adds a specific amount extra to the price based on choice along with specific calorie count 
@@ -237,6 +305,7 @@ class Chipotle(Restaurant): #To edit later customisable bowl
     def __init__(self):
         
         choice = {"Burrito": (8,120), "Bowl": (6,100)}
+        beans = {}
         rice = {"White Rice": (), "Brown Rice": ()}
         protein = {"Carne Asada": (6,250),"Chicken Pastor": (4,300),"Barbacoa": (5,330)}
         toppings = {"Guac": (3,200),"Sour Cream": (2,100),"Corn": (2,70), "Pico Gallo": (3,60), "Hot Sauce": (1,20)}
@@ -319,8 +388,15 @@ def main():
     delivery_time = calculate_delivery_time(area_number, traffic_level)
     food_cost = chosen_restaurant.order()
  
+    print()
     print(f"Delivery cost: ${delivery_cost:.2f}")
     print(f"Grand total: ${delivery_cost + food_cost:.2f}")
     print(f"Estimated delivery time: {delivery_time} min due to {traffic_type}.")
 
 main()
+
+def test_main():
+    r = DominosPizza()
+    r.order()
+    
+#test_main()
