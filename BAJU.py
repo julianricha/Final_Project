@@ -305,15 +305,186 @@ class Chipotle(Restaurant): #To edit later customisable bowl
     def __init__(self):
         
         choice = {"Burrito": (8,120), "Bowl": (6,100)}
-        beans = {}
-        rice = {"White Rice": (), "Brown Rice": ()}
+        beans = {"Pinto Beans": (5, 260), "Black Beans": (5, 230)}
+        rice = {"White Rice": (3, 200), "Brown Rice": (3, 190)}
         protein = {"Carne Asada": (6,250),"Chicken Pastor": (4,300),"Barbacoa": (5,330)}
         toppings = {"Guac": (3,200),"Sour Cream": (2,100),"Corn": (2,70), "Pico Gallo": (3,60), "Hot Sauce": (1,20)}
         
-        menu = {"Burrito or Bowl": choice, "White or Brown Rice": rice, "Protein": protein, "Toppings": toppings}
+        menu = {"choice": choice, "rice": rice, "beans": beans, "protein": protein, "toppings": toppings}
         super().__init__(menu)
     
     # User builds either bowl or burrito from scratch by choosing an option from each category while knowing both price and calorie count
+    def order(self):
+        
+        total_price = 0
+        total_calories = 0
+        cart = []
+        
+        while True:
+            # Burrito vs. bowl
+            self.print_choice_menu()
+            print()
+            user_choice = int(input("Choose Burrito or Bowl, or enter 0 if you are ready to checkout: "))
+            
+            if user_choice == 0:
+                break
+            
+            while user_choice > 2 or user_choice < 1:
+                print()
+                print("Invalid selection, choose 1 or 2 for burrito or bowl.")
+                print()
+                self.print_choice_menu()
+                user_choice = int(input("Choose Burrito or Bowl, or enter 0 if you are ready to checkout: "))
+                
+            grain_options = list(self.menu["choice"].keys())
+            grain_selection = grain_options[user_choice - 1]
+            grain_price, grain_calories = self.menu["choice"][grain_selection]
+            
+            total_price += grain_price
+            total_calories += grain_calories
+            
+            # Brown vs. white rice
+            print()
+            self.print_rice_menu()
+            print()
+            user_choice = int(input("Choose brown or white rice: "))
+            
+            while user_choice > 2 or user_choice < 1:
+                print()
+                print("Invalid selection, choose 1 or 2 for brown or white rice.")
+                print()
+                self.print_rice_menu()
+                user_choice = int(input("Choose brown or white rice: "))
+                
+            rice_options = list(self.menu["rice"].keys())
+            rice_selection = rice_options[user_choice - 1]
+            rice_price, rice_calories = self.menu["rice"][rice_selection]
+            
+            total_price += rice_price
+            total_calories += rice_calories
+
+            # Black vs pinto beans
+            print()
+            self.print_beans_menu()
+            print()
+            user_choice = int(input("Choose black or pinto beans: "))
+            
+            while user_choice > 2 or user_choice < 1:
+                print()
+                print("Invalid selection, choose 1 or 2 for black or pinto beans.")
+                print()
+                self.print_beans_menu()
+                user_choice = int(input("Choose black or pinto beans: "))
+                
+            beans_options = list(self.menu["beans"].keys())
+            beans_selection = beans_options[user_choice - 1]
+            beans_price, beans_calories = self.menu["beans"][beans_selection]
+            
+            total_price += beans_price
+            total_calories += beans_calories
+            
+            # Protein selection
+            print()
+            self.print_protein_menu()
+            print()
+            user_choice = int(input("Choose protein type: "))
+            
+            while user_choice > 3 or user_choice < 1:
+                print()
+                print("Invalid selection, enter 1-3 to select protein type.")
+                print()
+                self.print_protein_menu()
+                user_choice = int(input("Choose protein type: "))
+                
+            protein_options = list(self.menu["protein"].keys())
+            protein_selection = protein_options[user_choice - 1]
+            protein_price, protein_calories = self.menu["protein"][protein_selection]
+            
+            total_price += protein_price
+            total_calories += protein_calories
+            
+            # Toppings selection
+            toppings = []
+            while True:
+                print()
+                self.print_toppings_menu()
+                print()
+                user_choice = int(input("Select any number of toppings: "))
+                
+                if user_choice == 0:
+                    break
+                elif user_choice <= 5 and user_choice >= 1:
+                    toppings_options = list(self.menu["toppings"].keys())
+                    topping_selection = toppings_options[user_choice - 1]
+                    topping_price, topping_calories = self.menu["toppings"][topping_selection]
+                
+                    total_price += topping_price
+                    total_calories += topping_calories
+                    toppings.append(topping_selection)
+                else:
+                    print()
+                    print("Invalid toppings selection.")
+                    
+            item = f"{grain_selection}, {rice_selection}, {beans_selection}, {protein_selection}"
+            toppings = ", ".join(toppings)
+            cart.append(f"{item} | {toppings}")
+            
+        print()
+        self.print_order_summary(cart, total_price, total_calories)
+        
+        return total_price
+        
+    def print_choice_menu(self):
+        print("Choice Menu\n")
+        
+        i = 1
+        
+        for choice, details in self.menu["choice"].items():
+            price, calories = details
+            print(f"{i}. {choice} | Price: ${price:.2f}, Calories: {calories} cal")
+            i+=1
+            
+    def print_rice_menu(self):
+        print("Rice Menu\n")
+        
+        i = 1
+        
+        for choice, details in self.menu["rice"].items():
+            price, calories = details
+            print(f"{i}. {choice} | Price: ${price:.2f}, Calories: {calories} cal")
+            i+=1
+            
+    def print_beans_menu(self):
+        print("Beans Menu\n")
+        
+        i = 1
+        
+        for choice, details in self.menu["beans"].items():
+            price, calories = details
+            print(f"{i}. {choice} | Price: ${price:.2f}, Calories: {calories} cal")
+            i+=1
+            
+    def print_protein_menu(self):
+        print("Protein Menu\n")
+        
+        i = 1
+        
+        for choice, details in self.menu["protein"].items():
+            price, calories = details
+            print(f"{i}. {choice} | Price: ${price:.2f}, Calories: {calories} cal")
+            i+=1
+        
+    def print_toppings_menu(self):
+        print("Toppings Menu\n")
+        
+        i = 1
+        
+        print("0. No additional toppings | Price: $0.00, Calories: 0 cal")
+        
+        for choice, details in self.menu["toppings"].items():
+            price, calories = details
+            print(f"{i}. {choice} | Price: ${price:.2f}, Calories: {calories} cal")
+            i+=1
     
     
 def print_restaurant_names():
@@ -394,9 +565,3 @@ def main():
     print(f"Estimated delivery time: {delivery_time} min due to {traffic_type}.")
 
 main()
-
-def test_main():
-    r = DominosPizza()
-    r.order()
-    
-#test_main()
