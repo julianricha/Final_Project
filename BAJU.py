@@ -1,5 +1,19 @@
 import random as rd
 
+def validate_input(val, lower, upper, msg):
+    if not val.isdigit():
+        print(msg)
+        return False
+    
+    val = int(val)
+    
+    if val < lower or val > upper:
+        print(msg)
+        return False
+        
+    return True
+    
+
 class Restaurant:
     def __init__(self, menu):
         self.menu = menu
@@ -14,7 +28,6 @@ class Restaurant:
 
 class CheesecakeFactory(Restaurant):
     def __init__(self):
-        # Simple menu - choose any item(s) you want
         menu = {"Oreo Cheesecake": (7,450), 
                 "Strawberry Cheesecake": (6,400),
                 "Burger Spring Rolls": (10,300),
@@ -33,7 +46,12 @@ class CheesecakeFactory(Restaurant):
             print()
             self.print_menu()
             print()
-            user_selection = int(input("Select item # to add to cart, or enter 0 if you are ready to checkout: "))
+            user_selection = input("Select item # to add to cart, or enter 0 if you are ready to checkout: ")
+            
+            if not validate_input(user_selection, 0, 6, "Invalid selection, press 0 if you are ready to checkout."):
+                continue
+            
+            user_selection = int(user_selection)
             
             if user_selection == 0:
                 break
@@ -46,8 +64,6 @@ class CheesecakeFactory(Restaurant):
                 total_price += item_price
                 total_calories += item_calories
                 cart.append(menu_selection)
-            else:
-                print("Invalid selection, press 0 if you are ready to checkout.")
                 
         print()
         self.print_order_summary(cart, total_price, total_calories)
@@ -85,7 +101,12 @@ class McDonalds(Restaurant):
             print()
             self.print_sandwich_menu()
             print()
-            user_sandwich_selection = int(input("Select Sandwich # to add to cart, or enter 0 if you are ready to checkout: "))
+            user_sandwich_selection = input("Select Sandwich # to add to cart, or enter 0 if you are ready to checkout: ")
+            
+            if not validate_input(user_sandwich_selection, 0, 4, "Invalid sandwich selection, try again."):
+                continue
+            
+            user_sandwich_selection = int(user_sandwich_selection)
             
             if user_sandwich_selection == 0:
                 break
@@ -98,25 +119,29 @@ class McDonalds(Restaurant):
                 total_calories += sandwich_calories
                 cart.append(sandwich_selection)
                 
-                print()
-                self.print_meal_menu()
-                print()
-                user_meal_selection = int(input("Select your meal type, or type 0 for sandwich only: "))
-                
-                if user_meal_selection == 0:
-                    continue
-                if user_meal_selection >= 1 and user_meal_selection <= 3:
-                    meal_items = list(self.menu["meals"])
-                    meal_selection = meal_items[user_meal_selection - 1]
-                    meal_price, meal_calories = self.menu["meals"][meal_selection]
+                while True:
+                    print()
+                    self.print_meal_menu()
+                    print()
+                    user_meal_selection = input("Select your meal type, or type 0 for sandwich only: ")
                     
-                    total_price += meal_price
-                    total_calories += meal_calories
-                    cart[-1] = cart[-1] + " " + meal_selection
-                else:
-                    print("Invalid meal selection, adding sandwich only to cart.")
-            else:
-                print("Invalid sandwich selection, try again.")
+                    if not validate_input(user_meal_selection, 0, 3, "Invalid meal selection, select 0-3 from the menu."):
+                        continue
+                    
+                    user_meal_selection = int(user_meal_selection)
+                    
+                    if user_meal_selection == 0:
+                        break
+                    elif user_meal_selection >= 1 and user_meal_selection <= 3:
+                        meal_items = list(self.menu["meals"])
+                        meal_selection = meal_items[user_meal_selection - 1]
+                        meal_price, meal_calories = self.menu["meals"][meal_selection]
+                        
+                        total_price += meal_price
+                        total_calories += meal_calories
+                        cart[-1] = cart[-1] + " " + meal_selection
+                        
+                        break
                 
         print()
         self.print_order_summary(cart, total_price, total_calories)
@@ -165,7 +190,12 @@ class TatteBakery(Restaurant):
             print()
             self.print_menu()
             print()
-            user_selection = int(input("Select item # to add to cart, or enter 0 if you are ready to checkout: "))
+            user_selection = input("Select item # to add to cart, or enter 0 if you are ready to checkout: ")
+            
+            if not validate_input(user_selection, 0, 4, "Invalid selection, press 0 if you are ready to checkout."):
+                continue
+            
+            user_selection = int(user_selection)
             
             if user_selection == 0:
                 break
@@ -183,7 +213,12 @@ class TatteBakery(Restaurant):
                     print()
                     self.print_options(menu_selection)
                     print()
-                    option_selection = int(input("Select option # to add to your item, or enter 0 for no options: "))
+                    option_selection = input("Select option # to add to your item, or enter 0 for no options: ")
+                    
+                    if not validate_input(option_selection, 0, 2, "Invalid option, enter 0 to skip this step."):
+                        continue
+                    
+                    option_selection = int(option_selection)
                     
                     if option_selection == 0:
                         break
@@ -192,8 +227,6 @@ class TatteBakery(Restaurant):
                         total_price += 1
                         total_calories += 100
                         cart[-1] = cart[-1] + "+" + option
-            else:
-                print("Invalid selection, press 0 if you are ready to checkout.")
          
         print()
         self.print_order_summary(cart, total_price, total_calories)
@@ -221,7 +254,6 @@ class TatteBakery(Restaurant):
         
 class DominosPizza(Restaurant): 
     def __init__(self):
-        # User must choose a size and a choice
         size_menu = {"Small": (10, 500), "Medium": (13, 750), "Large": (16, 900)}
         choice_menu = {"Cheese": (2, 200), "Pepperoni": (5, 250), "Hawaiian": (3, 200), "Veggie": (4, 170), "BBQ Chicken": (6, 350)}
         
@@ -240,7 +272,12 @@ class DominosPizza(Restaurant):
             print()
             self.print_size_menu()
             print()
-            user_selection = int(input("Select your pizza size, or enter 0 if you are ready to checkout: "))
+            user_selection = input("Select your pizza size, or enter 0 if you are ready to checkout: ")
+            
+            if not validate_input(user_selection, 0, 3, "Invalid selection, press 0 if you are ready to checkout."): 
+                continue
+            
+            user_selection = int(user_selection)
             
             if user_selection == 0:
                 break
@@ -249,17 +286,18 @@ class DominosPizza(Restaurant):
                 size_selection = size_options[user_selection - 1]
                 size_price, size_calories = self.menu["size"][size_selection]
                 
-                print()
-                self.print_pizza_menu()
-                print()
-                user_selection = int(input("Select pizza choice: "))
-                
-                while user_selection > 5 or user_selection < 1:
-                    print("Invalid selection, enter a number 1-5.\n")
+                while True:
+                    print()
                     self.print_pizza_menu()
                     print()
-                    pizza_selection = int(input("Select pizza choice: "))
-                    print()
+                    
+                    user_selection = (input("Select pizza choice: "))
+                    
+                    if not validate_input(user_selection, 1, 5,"Invalid selection, enter a number 1-5."):
+                        continue
+                    
+                    user_selection = int(user_selection)
+                    break
                 
                 pizza_options = list(self.menu["choice"].keys())
                 pizza_selection = pizza_options[user_selection - 1]
@@ -269,8 +307,7 @@ class DominosPizza(Restaurant):
                 total_calories += (size_calories + pizza_calories)
                 pizza_order = f"{size_selection} {pizza_selection} Pizza"
                 cart.append(pizza_order)
-            else:
-                print("Invalid selection, press 0 if you are ready to checkout.")
+           
     
         print()
         self.print_order_summary(cart, total_price, total_calories)
@@ -324,18 +361,16 @@ class Chipotle(Restaurant): #To edit later customisable bowl
             # Burrito vs. bowl
             self.print_choice_menu()
             print()
-            user_choice = int(input("Choose Burrito or Bowl, or enter 0 if you are ready to checkout: "))
+            user_choice = input("Choose Burrito or Bowl, or enter 0 if you are ready to checkout: ")
+            
+            if not validate_input(user_choice, 0, 2, "Invalid selection, enter 0 if you are ready to checkout.."):
+                continue
+                
+            user_choice = int(user_choice)
             
             if user_choice == 0:
                 break
             
-            while user_choice > 2 or user_choice < 1:
-                print()
-                print("Invalid selection, choose 1 or 2 for burrito or bowl.")
-                print()
-                self.print_choice_menu()
-                user_choice = int(input("Choose Burrito or Bowl, or enter 0 if you are ready to checkout: "))
-                
             grain_options = list(self.menu["choice"].keys())
             grain_selection = grain_options[user_choice - 1]
             grain_price, grain_calories = self.menu["choice"][grain_selection]
@@ -344,64 +379,67 @@ class Chipotle(Restaurant): #To edit later customisable bowl
             total_calories += grain_calories
             
             # Brown vs. white rice
-            print()
-            self.print_rice_menu()
-            print()
-            user_choice = int(input("Choose brown or white rice: "))
-            
-            while user_choice > 2 or user_choice < 1:
-                print()
-                print("Invalid selection, choose 1 or 2 for brown or white rice.")
+            while True:
                 print()
                 self.print_rice_menu()
-                user_choice = int(input("Choose brown or white rice: "))
+                print()
+                user_choice = input("Choose brown or white rice: ")
                 
-            rice_options = list(self.menu["rice"].keys())
-            rice_selection = rice_options[user_choice - 1]
-            rice_price, rice_calories = self.menu["rice"][rice_selection]
-            
-            total_price += rice_price
-            total_calories += rice_calories
+                if not validate_input(user_choice, 1, 2, "Invalid selection, choose 1 or 2 for brown or white rice."):
+                    continue
+                
+                user_choice = int(user_choice)
+                    
+                rice_options = list(self.menu["rice"].keys())
+                rice_selection = rice_options[user_choice - 1]
+                rice_price, rice_calories = self.menu["rice"][rice_selection]
+                
+                total_price += rice_price
+                total_calories += rice_calories
+                
+                break
 
             # Black vs pinto beans
-            print()
-            self.print_beans_menu()
-            print()
-            user_choice = int(input("Choose black or pinto beans: "))
-            
-            while user_choice > 2 or user_choice < 1:
-                print()
-                print("Invalid selection, choose 1 or 2 for black or pinto beans.")
+            while True:
                 print()
                 self.print_beans_menu()
-                user_choice = int(input("Choose black or pinto beans: "))
+                print()
+                user_choice = (input("Choose black or pinto beans: "))
                 
-            beans_options = list(self.menu["beans"].keys())
-            beans_selection = beans_options[user_choice - 1]
-            beans_price, beans_calories = self.menu["beans"][beans_selection]
-            
-            total_price += beans_price
-            total_calories += beans_calories
+                if not validate_input(user_choice, 1, 2, "Invalid selection, choose 1 or 2 for black or pinto beans."):
+                    continue
+                
+                user_choice = int(user_choice)
+                    
+                beans_options = list(self.menu["beans"].keys())
+                beans_selection = beans_options[user_choice - 1]
+                beans_price, beans_calories = self.menu["beans"][beans_selection]
+                
+                total_price += beans_price
+                total_calories += beans_calories
+                break
             
             # Protein selection
-            print()
-            self.print_protein_menu()
-            print()
-            user_choice = int(input("Choose protein type: "))
-            
-            while user_choice > 3 or user_choice < 1:
-                print()
-                print("Invalid selection, enter 1-3 to select protein type.")
+            while True:
                 print()
                 self.print_protein_menu()
-                user_choice = int(input("Choose protein type: "))
+                print()
+                user_choice = (input("Choose protein type: "))
                 
-            protein_options = list(self.menu["protein"].keys())
-            protein_selection = protein_options[user_choice - 1]
-            protein_price, protein_calories = self.menu["protein"][protein_selection]
+                if not validate_input(user_choice, 1, 3, "Invalid selection, choose 1-3 for protein."):
+                    continue
+                
+                user_choice = int(user_choice)
+                
             
-            total_price += protein_price
-            total_calories += protein_calories
+                    
+                protein_options = list(self.menu["protein"].keys())
+                protein_selection = protein_options[user_choice - 1]
+                protein_price, protein_calories = self.menu["protein"][protein_selection]
+                
+                total_price += protein_price
+                total_calories += protein_calories
+                break
             
             # Toppings selection
             toppings = []
@@ -409,7 +447,12 @@ class Chipotle(Restaurant): #To edit later customisable bowl
                 print()
                 self.print_toppings_menu()
                 print()
-                user_choice = int(input("Select any number of toppings: "))
+                user_choice = (input("Select any number of toppings: "))
+                
+                if not validate_input(user_choice, 0, 5, "Invalid selection, choose 0 to checkout or 1-5 for toppings."):
+                    continue
+                
+                user_choice = int(user_choice)
                 
                 if user_choice == 0:
                     break
@@ -421,9 +464,7 @@ class Chipotle(Restaurant): #To edit later customisable bowl
                     total_price += topping_price
                     total_calories += topping_calories
                     toppings.append(topping_selection)
-                else:
-                    print()
-                    print("Invalid toppings selection.")
+               
                     
             item = f"{grain_selection}, {rice_selection}, {beans_selection}, {protein_selection}"
             toppings = ", ".join(toppings)
@@ -524,31 +565,30 @@ def calculate_delivery_time(area, traffic_level):
 def main():
     restaurants = [CheesecakeFactory(), McDonalds(), TatteBakery(), DominosPizza(), Chipotle()]
     
-    print_restaurant_names()
-    print()
-    choice = int(input("Choose a restaurant by number: "))
-    
-    while choice > 5 or choice < 1:
+    while True:
         print_restaurant_names()
-        print("Invalid selection, enter a number 1-5.\n")
-        choice = int(input("Choose a restaurant by number: "))
         print()
-
-    chosen_restaurant = restaurants[choice - 1]
+        choice = input("Choose a restaurant by number: ")
+        
+        if not validate_input(choice, 1, 5, "Invalid selection, choose from 1-5 for restaurant."):
+            continue
+        
+        choice = int(choice)
     
-    print_areas()
-    print()
-    print()
-    area_number = int(input("Please enter your area number: ")) 
-    print("____________________________________________________________________")
+        chosen_restaurant = restaurants[choice - 1]
+        break
     
-   
-    while area_number > 5 or area_number < 1:
+    while True:
         print_areas()
         print()
         print()
-        area_number = int(input("Please enter your area number: "))
+        area_number = input("Please enter your area number: ")
         print("____________________________________________________________________")
+        if not validate_input(area_number, 1, 5, "Invalid selection, choose from 1-5 for area."):
+            continue
+        
+        area_number = int(area_number)
+        break
      
    
     
