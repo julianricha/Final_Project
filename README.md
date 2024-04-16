@@ -38,7 +38,16 @@ https://github.com/julianricha/Final_Project
 - A fully functional Python application of a food ordering system 
 - A report detailing the program's efficiency and behavior with orders from different restaurants. 
 - A project presentation that summarizes the project's objectives, development process,  challenges encountered, and learning outcomes.
+- Calculates price and calorie count of all items along with options.
 
+## How to use Project:
+Run program and follow the steps in the command line based on your desire of choice. Below are the details of each restaurant for you to utilize the full BAJU experience.
+
+### Cheesecake Factory: User simply chooses items from the given menu, calculates calories and price.
+### Mcdonalds: User chooses a sandwich from the sandwich menu with each having a set price and calorie count. Users are then prompted to choose whether they want the sandwich only, or want it as a Happy, Medium, or Large meal. Each meal also has a set price and calorie count since it comes with fries and a drink, so if the user chooses a meal, additional price and calorie calculations will occur.
+### Tatte Bakery: User chooses from given menu, but is also given the option to add extra topping to selected item. Menu is a dictionary with item as key, and price, calorie count, and toppings tuple as value. Every option increases the price by 2 dollars and calorie count by 100 dollars.
+### Dominos: User chooses pizza size which has set price and calorie count, and is then required to choose pizza choice which also has set price and calorie count. Calculates total calories and price based on the number of pizzas ordered as well as sizes and pizza choice.
+### Chipotle: Users build order from scratch here. Users are first prompted to choose between bowl or burrito, then choose between white or brown rice, then black or pinto beans, then choose protein, then have the option of adding additional toppings as much as they want. Every single selection accounts for the calculated price and calories. User is required to choose before making additional toppings.
 
 ## Document Basic Functionalities 
 - User Interaction: Ability to allow users to choose from a variety of restaurants and add items to the cart based on the restaurants menu
