@@ -31,9 +31,8 @@ This project aims to develop a comprehensive Python application that leverages a
 https://github.com/julianricha/Final_Project 
 
 ## Project Objectives: 
-- To develop a Python application that allows users to order food through delivery, have a breakdown of the order cost, estimated delivery time, and apply for an optional membership for discounts and price cuts
+- To develop a Python application that allows users to order food through delivery, have a breakdown of the order cost, estimated delivery time, and calculate total calories of order
 - Implement object oriented programming and inheritance for restaurants and user functionalities
-- Create a graphical user interface for the ordering process and display full order with info to the user
 
 ## Deliverables: 
 - A fully functional Python application of a food ordering system 
@@ -45,7 +44,6 @@ https://github.com/julianricha/Final_Project
 - User Interaction: Ability to allow users to choose from a variety of restaurants and add items to the cart based on the restaurants menu
 - Customizable Order: Allow users to customize orders based on chosen restaurant and be able to calculate the cost of the customizable order. A customizable order can be creating an order from scratch, or choosing stuff like toppings to a specific order, rather than just having to choose from a menu and adding to cart
 - Total Cost: Display a total breakdown of order cost based on user menu choices, sizes, and other fees.
-- Membership: Allow users to opt in for an optional membership to be accountable for possible discounts and price cuts
-- GUI: Have a graphical user interface for the ordering process to have a dynamic and interactive experience for the user.
+- Calorie Calculator: Calculates total calories of customizable order after checking out for users to stay on track of dietary restrctions.
 - Delivery time: Based on both restaurant’s location and user location, we can display not only the delivery time, but also account for possible traffic that might delay an order
 
