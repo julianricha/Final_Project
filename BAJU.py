@@ -1,6 +1,6 @@
 import random as rd
 
-def validate_input(val, lower, upper, msg):
+def valid_input(val, lower, upper, msg):
     if not val.isdigit():
         print(msg)
         return False
@@ -27,6 +27,9 @@ class Restaurant:
         print(f"Food total: ${total_price:.2f}")
 
 class CheesecakeFactory(Restaurant):
+    # User simply chooses items from the given menu, calculates calories and price.
+
+    
     def __init__(self):
         menu = {"Oreo Cheesecake": (7,450), 
                 "Strawberry Cheesecake": (6,400),
@@ -48,7 +51,7 @@ class CheesecakeFactory(Restaurant):
             print()
             user_selection = input("Select item # to add to cart, or enter 0 if you are ready to checkout: ")
             
-            if not validate_input(user_selection, 0, 6, "Invalid selection, press 0 if you are ready to checkout."):
+            if not valid_input(user_selection, 0, 6, "Invalid selection, press 0 if you are ready to checkout."):
                 continue
             
             user_selection = int(user_selection)
@@ -83,8 +86,11 @@ class CheesecakeFactory(Restaurant):
     # User simply chooses from menu, calculates price and calories for each
 
 class McDonalds(Restaurant):
+    # User chooses a sandwich from the sandwich menu with each having a set price and calorie count. 
+    # Users are then prompted to choose whether they want the sandwich only, or want it as a Happy, Medium, or Large meal. 
+    # Each meal also has a set price and calorie count since it comes with fries and a drink, so if the user chooses a meal, additional price and calorie calculations will occur.
+
     def __init__(self):
-        # Compound menu - choose either sandwich or sandwich + meal
         meal_menu = {"Happy Meal": (3, 500), "Regular Meal": (5, 790), "Large Meal": (8, 1100)}
         sandwich_menu = {"Big Mac": (6, 450), "Quarter Pounder": (5, 500), "McChicken": (3, 350), "Cheese Burger": (3, 300)}
         
@@ -103,7 +109,7 @@ class McDonalds(Restaurant):
             print()
             user_sandwich_selection = input("Select Sandwich # to add to cart, or enter 0 if you are ready to checkout: ")
             
-            if not validate_input(user_sandwich_selection, 0, 4, "Invalid sandwich selection, try again."):
+            if not valid_input(user_sandwich_selection, 0, 4, "Invalid sandwich selection, try again."):
                 continue
             
             user_sandwich_selection = int(user_sandwich_selection)
@@ -125,7 +131,7 @@ class McDonalds(Restaurant):
                     print()
                     user_meal_selection = input("Select your meal type, or type 0 for sandwich only: ")
                     
-                    if not validate_input(user_meal_selection, 0, 3, "Invalid meal selection, select 0-3 from the menu."):
+                    if not valid_input(user_meal_selection, 0, 3, "Invalid meal selection, select 0-3 from the menu."):
                         continue
                     
                     user_meal_selection = int(user_meal_selection)
@@ -171,9 +177,14 @@ class McDonalds(Restaurant):
     
        
 class TatteBakery(Restaurant):
+    # User chooses from given menu, but is also given the option to add extra topping to selected item.
+    # Menu is a dictionary with item as key, and price, calorie count, and toppings tuple as value. 
+    # Every option increases the price by 2 dollars and calorie count by 100 dollars. Calculates price and calorie count of all items along with options.
+
+    
     def __init__(self):
-        # Add $1 and 100 calories for each additional option on each item
-        # When ordering, user must be prompted for each option - either "Y" or "N"
+        # Add $2 and 100 calories for each additional option on each item
+        # When ordering, user must be prompted for each option
         menu = {"Almond Croissant": (3,400, ("butter", "egg")),
                     "Short Ribs Sandwich": (10,560, ("meat", "onions")),
                      "Chicken Pita": (8,450, ("toasted", "pickles")),
@@ -192,7 +203,7 @@ class TatteBakery(Restaurant):
             print()
             user_selection = input("Select item # to add to cart, or enter 0 if you are ready to checkout: ")
             
-            if not validate_input(user_selection, 0, 4, "Invalid selection, press 0 if you are ready to checkout."):
+            if not valid_input(user_selection, 0, 4, "Invalid selection, press 0 if you are ready to checkout."):
                 continue
             
             user_selection = int(user_selection)
@@ -215,7 +226,7 @@ class TatteBakery(Restaurant):
                     print()
                     option_selection = input("Select option # to add to your item, or enter 0 for no options: ")
                     
-                    if not validate_input(option_selection, 0, 2, "Invalid option, enter 0 to skip this step."):
+                    if not valid_input(option_selection, 0, 2, "Invalid option, enter 0 to skip this step."):
                         continue
                     
                     option_selection = int(option_selection)
@@ -224,7 +235,7 @@ class TatteBakery(Restaurant):
                         break
                     elif option_selection >= 1 and option_selection <= 2:
                         option = options[option_selection - 1]
-                        total_price += 1
+                        total_price += 2
                         total_calories += 100
                         cart[-1] = cart[-1] + "+" + option
          
@@ -253,6 +264,9 @@ class TatteBakery(Restaurant):
             i += 1
         
 class DominosPizza(Restaurant): 
+    # User chooses pizza size which has set price and calorie count, and is then required to choose pizza choice which also has set price and calorie count. 
+    # Calculates total calories and price based on the number of pizzas ordered as well as sizes and pizza choice.
+
     def __init__(self):
         size_menu = {"Small": (10, 500), "Medium": (13, 750), "Large": (16, 900)}
         choice_menu = {"Cheese": (2, 200), "Pepperoni": (5, 250), "Hawaiian": (3, 200), "Veggie": (4, 170), "BBQ Chicken": (6, 350)}
@@ -274,7 +288,7 @@ class DominosPizza(Restaurant):
             print()
             user_selection = input("Select your pizza size, or enter 0 if you are ready to checkout: ")
             
-            if not validate_input(user_selection, 0, 3, "Invalid selection, press 0 if you are ready to checkout."): 
+            if not valid_input(user_selection, 0, 3, "Invalid selection, press 0 if you are ready to checkout."): 
                 continue
             
             user_selection = int(user_selection)
@@ -293,7 +307,7 @@ class DominosPizza(Restaurant):
                     
                     user_selection = (input("Select pizza choice: "))
                     
-                    if not validate_input(user_selection, 1, 5,"Invalid selection, enter a number 1-5."):
+                    if not valid_input(user_selection, 1, 5,"Invalid selection, enter a number 1-5."):
                         continue
                     
                     user_selection = int(user_selection)
@@ -340,6 +354,9 @@ class DominosPizza(Restaurant):
 
 class Chipotle(Restaurant): #To edit later customisable bowl
     def __init__(self):
+        # Users build order from scratch here. 
+        # Users are first prompted to choose between bowl or burrito, then choose between white or brown rice, then black or pinto beans, then choose protein.
+        # then have the option of adding additional toppings as much as they want. Every single selection accounts for the calculated price and calories. User is required to choose before making additional toppings.
         
         choice = {"Burrito": (8,120), "Bowl": (6,100)}
         beans = {"Pinto Beans": (5, 260), "Black Beans": (5, 230)}
@@ -363,7 +380,7 @@ class Chipotle(Restaurant): #To edit later customisable bowl
             print()
             user_choice = input("Choose Burrito or Bowl, or enter 0 if you are ready to checkout: ")
             
-            if not validate_input(user_choice, 0, 2, "Invalid selection, enter 0 if you are ready to checkout.."):
+            if not valid_input(user_choice, 0, 2, "Invalid selection, enter 0 if you are ready to checkout.."):
                 continue
                 
             user_choice = int(user_choice)
@@ -385,7 +402,7 @@ class Chipotle(Restaurant): #To edit later customisable bowl
                 print()
                 user_choice = input("Choose brown or white rice: ")
                 
-                if not validate_input(user_choice, 1, 2, "Invalid selection, choose 1 or 2 for brown or white rice."):
+                if not valid_input(user_choice, 1, 2, "Invalid selection, choose 1 or 2 for brown or white rice."):
                     continue
                 
                 user_choice = int(user_choice)
@@ -406,7 +423,7 @@ class Chipotle(Restaurant): #To edit later customisable bowl
                 print()
                 user_choice = (input("Choose black or pinto beans: "))
                 
-                if not validate_input(user_choice, 1, 2, "Invalid selection, choose 1 or 2 for black or pinto beans."):
+                if not valid_input(user_choice, 1, 2, "Invalid selection, choose 1 or 2 for black or pinto beans."):
                     continue
                 
                 user_choice = int(user_choice)
@@ -426,7 +443,7 @@ class Chipotle(Restaurant): #To edit later customisable bowl
                 print()
                 user_choice = (input("Choose protein type: "))
                 
-                if not validate_input(user_choice, 1, 3, "Invalid selection, choose 1-3 for protein."):
+                if not valid_input(user_choice, 1, 3, "Invalid selection, choose 1-3 for protein."):
                     continue
                 
                 user_choice = int(user_choice)
@@ -449,7 +466,7 @@ class Chipotle(Restaurant): #To edit later customisable bowl
                 print()
                 user_choice = (input("Select any number of toppings: "))
                 
-                if not validate_input(user_choice, 0, 5, "Invalid selection, choose 0 to checkout or 1-5 for toppings."):
+                if not valid_input(user_choice, 0, 5, "Invalid selection, choose 0 to checkout or 1-5 for toppings."):
                     continue
                 
                 user_choice = int(user_choice)
@@ -570,7 +587,7 @@ def main():
         print()
         choice = input("Choose a restaurant by number: ")
         
-        if not validate_input(choice, 1, 5, "Invalid selection, choose from 1-5 for restaurant."):
+        if not valid_input(choice, 1, 5, "Invalid selection, choose from 1-5 for restaurant."):
             continue
         
         choice = int(choice)
@@ -584,7 +601,7 @@ def main():
         print()
         area_number = input("Please enter your area number: ")
         print("____________________________________________________________________")
-        if not validate_input(area_number, 1, 5, "Invalid selection, choose from 1-5 for area."):
+        if not valid_input(area_number, 1, 5, "Invalid selection, choose from 1-5 for area."):
             continue
         
         area_number = int(area_number)
