@@ -31,9 +31,9 @@ This project aims to develop a comprehensive Python application that leverages a
 https://github.com/julianricha/Final_Project 
 
 ## Project Objectives: 
-- To develop a Python application that allows users to order food through delivery, have a breakdown of the order cost, estimated delivery time, and apply for an optional membership for discounts and price cuts
+- To develop a Python application that allows users to order food through delivery, have a breakdown of the order cost, estimated delivery time, and calculated calories of order
 - Implement object oriented programming and inheritance for restaurants and user functionalities
-- Create a graphical user interface for the ordering process and display full order with info to the user
+
 
 ## Deliverables: 
 - A fully functional Python application of a food ordering system 
@@ -45,7 +45,19 @@ https://github.com/julianricha/Final_Project
 - User Interaction: Ability to allow users to choose from a variety of restaurants and add items to the cart based on the restaurants menu
 - Customizable Order: Allow users to customize orders based on chosen restaurant and be able to calculate the cost of the customizable order. A customizable order can be creating an order from scratch, or choosing stuff like toppings to a specific order, rather than just having to choose from a menu and adding to cart
 - Total Cost: Display a total breakdown of order cost based on user menu choices, sizes, and other fees.
-- Membership: Allow users to opt in for an optional membership to be accountable for possible discounts and price cuts
-- GUI: Have a graphical user interface for the ordering process to have a dynamic and interactive experience for the user.
+- Calorie Calculator: The user will recieve a total calorie calculator after checking out to stay on track on their dietary restrictions.
 - Delivery time: Based on both restaurant’s location and user location, we can display not only the delivery time, but also account for possible traffic that might delay an order
 
+## Using Project
+- Run program and follow the steps in the command line based on your desire of choice. Below are the details of each restaurant for you to utilize the full BAJU experience.
+
+### Cheesecake Factory: User simply chooses items from the given menu, calculates calories and price.
+
+### Mcdonalds: User chooses a sandwich from the sandwich menu with each having a set price and calorie count. Users are then prompted to choose whether they want the sandwich only, or want it as a Happy, Medium, or Large meal. Each meal also has a set price and calorie count since it comes with fries and a drink, so if the user chooses a meal, additional price and calorie calculations will occur.
+
+### Tatte Bakery: User chooses from given menu, but is also given the option to add extra topping to selected item. Menu is a dictionary with item as key, and price, calorie count, and toppings tuple as value. Every option increases the price by 2 dollars and calorie count by 100 dollars.
+Calculates price and calorie count of all items along with options.
+
+### Dominos: User chooses pizza size which has set price and calorie count, and is then required to choose pizza choice which also has set price and calorie count. Calculates total calories and price based on the number of pizzas ordered as well as sizes and pizza choice.
+
+### Chipotle: Users build order from scratch here. Users are first prompted to choose between bowl or burrito, then choose between white or brown rice, then black or pinto beans, then choose protein, then have the option of adding additional toppings as much as they want. Every single selection accounts for the calculated price and calories. User is required to choose before making additional toppings.
